@@ -1,3 +1,5 @@
+package com.muliyul.fdb
+
 data class Matrix<T>(
 	private val data: List<MutableList<T>> = emptyList()
 ) {
@@ -6,7 +8,7 @@ data class Matrix<T>(
 	val columns = data.getOrNull(0)?.size ?: 0
 
 	val rowIndices = data.indices
-	val columnIndices = data[0].indices
+	val columnIndices = data.getOrNull(0)?.indices ?: 0..0
 
 	constructor(vararg rows: List<T>) : this(rows.map { it.toMutableList() })
 

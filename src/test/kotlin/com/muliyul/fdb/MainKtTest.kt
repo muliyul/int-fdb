@@ -1,3 +1,5 @@
+package com.muliyul.fdb
+
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.Arguments.arguments
@@ -20,7 +22,7 @@ internal class MainKtTest {
 
 	@ParameterizedTest
 	@MethodSource("adjacentCharsTestCases")
-	fun adjacentChars(case: AdjacentCharsTestCases) = with(case) {
+	fun adjacentChars(case: AdjacentCharsTestCase) = with(case) {
 		assertEquals(expected, adjacentChars(char, coordinates, matrix))
 	}
 
@@ -48,6 +50,10 @@ internal class MainKtTest {
 				base.copy(
 					target = "ABF",
 					expected = false
+				),
+				base.copy(
+					target = "Z",
+					expected = false
 				)
 			).map { arguments(it) }
 		}
@@ -70,12 +76,20 @@ internal class MainKtTest {
 			return listOf(
 				base,
 				base.copy(
-					target = "ABEDA",
+					target = "BEDA",
 					expected = false
 				),
 				base.copy(
-					target = "ABF",
+					target = "BF",
 					expected = false
+				),
+				base.copy(
+					target = "ZFE",
+					expected = false
+				),
+				base.copy(
+					target = "",
+					expected = true
 				)
 			).map { arguments(it) }
 		}
@@ -88,11 +102,11 @@ internal class MainKtTest {
 				"GHC".toList()
 			)
 
-			val base = AdjacentCharsTestCases(
+			val base = AdjacentCharsTestCase(
 				char = 'A',
 				coordinates = 0 to 0,
 				matrix = matrix,
-				expected = listOf()
+				expected = emptyList()
 			)
 
 			return listOf(
@@ -111,7 +125,9 @@ internal class MainKtTest {
 				),
 			).map { arguments(it) }
 		}
+
 	}
+
 }
 
 data class IsWordInMatrixTestCase(
@@ -128,7 +144,7 @@ data class MatrixContainsAdjacentSubstringTestCase(
 	val expected: Boolean
 )
 
-data class AdjacentCharsTestCases(
+data class AdjacentCharsTestCase(
 	val char: Char,
 	val coordinates: Pair<Int, Int>,
 	val matrix: Matrix<Char>,
